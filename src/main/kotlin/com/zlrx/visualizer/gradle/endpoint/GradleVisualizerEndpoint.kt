@@ -1,5 +1,6 @@
 package com.zlrx.visualizer.gradle.endpoint
 
+import com.zlrx.visualizer.gradle.model.JsonDependencyModel
 import com.zlrx.visualizer.gradle.service.GradleDependencyService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,6 +15,6 @@ class GradleVisualizerEndpoint {
     private lateinit var gradleDependencyService: GradleDependencyService
 
     @GetMapping
-    fun generateDependencyData(): String = gradleDependencyService.generateDependencyGraphData()
+    fun generateDependencyData(): JsonDependencyModel = gradleDependencyService.generateDependencyGraphData()
 
 }

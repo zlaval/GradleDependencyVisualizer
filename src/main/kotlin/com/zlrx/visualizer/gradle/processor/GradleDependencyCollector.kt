@@ -1,82 +1,73 @@
 package com.zlrx.visualizer.gradle.processor
 
 import com.zlrx.visualizer.gradle.model.DependencyModel
+import com.zlrx.visualizer.gradle.model.JsonDependencyModel
+import com.zlrx.visualizer.gradle.model.Link
+import com.zlrx.visualizer.gradle.model.Node
 import org.gradle.tooling.GradleConnector
-import org.gradle.tooling.model.GradleProject
 import org.gradle.tooling.model.idea.IdeaDependency
-import org.gradle.tooling.model.idea.IdeaModule
 import org.gradle.tooling.model.idea.IdeaProject
 import org.gradle.tooling.model.idea.IdeaSingleEntryLibraryDependency
 import java.io.File
 
 
-class GradleDependencyCollector(private val path: String) {
+class GradleDependencyCollector(private val path: String, gradleInstallDir: String) {
 
-    private val dependencies: MutableMap<String, DependencyModel> = HashMap()
+    private var gradleConnector: GradleConnector = GradleConnector.newConnector()
 
-    fun collectDependency(): DependencyModel {
+    init {
+        gradleConnector.useInstallation(File(gradleInstallDir))
+    }
 
-        val gradleLocation = File("d:\\Devtool\\Gradle\\")
-        val gradleConnector = GradleConnector.newConnector()
-        gradleConnector.useInstallation(gradleLocation)
-        gradleConnector.forProjectDirectory(File("d:\\Application\\gradle-dependency\\"))
-
-
+    fun collectDependency(): JsonDependencyModel {
+        gradleConnector.forProjectDirectory(File(path))
         val gradleConnection = gradleConnector.connect()
 
         try {
-            val gradleProject = gradleConnection.getModel(GradleProject::class.java)
             val ideaProject = gradleConnection.getModel(IdeaProject::class.java)
+            val dependencyModel: DependencyModel = ideaProject.children.map { module ->
+                val dependencyList = module.dependencies
+                        .filter { it.scope.scope == "RUNTIME" }
+                        .map { dep: IdeaDependency -> createDependencyModel(dep) }
 
-
-            println("**********************************************************************")
-
-            ideaProject.children.forEach { module: IdeaModule ->
-
-                module.dependencies
-                        .filter { dep: IdeaDependency ->
-
-                            dep.scope.scope == "RUNTIME"
-
-                        }
-                        .forEach { dep: IdeaDependency ->
-                            if (dep is IdeaSingleEntryLibraryDependency) {
-                                val gradleModuleVersion = dep.gradleModuleVersion
-                                val groupId = gradleModuleVersion.group
-                                val artifactId = gradleModuleVersion.name
-                                val version = gradleModuleVersion.version
-                                println("$groupId:$artifactId:$version")
-
-
-                            }
-
-
-                        }
+                val root = DependencyModel("com.zlrx", module.name, "1.0")
+                root.addChildren(dependencyList)
+                root
             }
-            println("**********************************************************************")
+                    .first()
+            return mapToJsonDependencyModel(dependencyModel)
         } finally {
             gradleConnection.close()
         }
-
-
-        //TODO read file
-        //parse
-        //manage dep model
-
-        return DependencyModel("", "", "")
-
     }
 
-    private fun manageDependencyModel(groupId: String,
-                                      artifactId: String,
-                                      version: String,
-                                      parent: DependencyModel) {
-
-        val key = "$groupId:$artifactId:$version"
-        val model = dependencies.get(key) ?: DependencyModel(groupId, artifactId, version)
-        dependencies.putIfAbsent(key, model)
-        parent.addChild(model)
+    private fun createDependencyModel(dep: IdeaDependency): DependencyModel {
+        if (dep is IdeaSingleEntryLibraryDependency) {
+            val gradleModuleVersion = dep.gradleModuleVersion
+            val groupId = gradleModuleVersion.group
+            val artifactId = gradleModuleVersion.name
+            val version = gradleModuleVersion.version
+            return DependencyModel(groupId, artifactId, version)
+        }
+        throw RuntimeException("Invalid type")
     }
 
+    fun mapToJsonDependencyModel(dependencyModel: DependencyModel): JsonDependencyModel {
+
+        val nodes = ArrayList<Node>()
+        val links = ArrayList<Link>()
+
+        val rootNode = Node(dependencyModel.artifactId, group = 0)
+        nodes.add(rootNode)
+
+        dependencyModel.getChildren().forEach {
+            val node = Node(it.artifactId)
+            val link = Link(rootNode.id, node.id)
+            nodes.add(node)
+            links.add(link)
+        }
+
+        return JsonDependencyModel(nodes, links)
+    }
 
 }
