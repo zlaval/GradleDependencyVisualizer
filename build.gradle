@@ -45,6 +45,7 @@ idea {
 }
 
 repositories {
+    maven { url 'https://repo.gradle.org/gradle/libs-releases-local/' }
     mavenCentral()
 }
 
@@ -56,5 +57,9 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     compileOnly('org.projectlombok:lombok')
+    compile group: 'org.gradle', name: 'gradle-tooling-api', version: '4.1'
+    compileOnly group: 'org.gradle', name: 'gradle-core', version: '4.1'
+
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

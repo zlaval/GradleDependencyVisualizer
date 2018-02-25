@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/dependencies")
 class GradleVisualizerEndpoint {
 
     @Autowired
     private lateinit var gradleDependencyService: GradleDependencyService
 
     @GetMapping
-    fun test(): String = "Hello"
+    fun generateDependencyData(): String = gradleDependencyService.generateDependencyGraphData()
 
 }

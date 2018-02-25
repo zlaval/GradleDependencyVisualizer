@@ -4,9 +4,9 @@ import java.util.*
 
 
 class DependencyModel(
-        private val groupId: String,
-        private val artifactId: String,
-        private val version: String) {
+        groupId: String,
+        artifactId: String,
+        version: String) {
 
     val name: String = "$groupId:$artifactId:$version"
 
