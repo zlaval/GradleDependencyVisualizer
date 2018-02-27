@@ -20,7 +20,7 @@ subprojects {
     apply plugin: 'kotlin'
 
     group = 'com.zlrx.visualizer'
-    version = '0.0.1'
+    version = '0.0.5'
     sourceCompatibility = 1.8
 
     compileKotlin {
@@ -54,7 +54,7 @@ subprojects {
         compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
         compile group: 'org.gradle', name: 'gradle-tooling-api', version: '4.1'
         compile group: 'javax.inject', name: 'javax.inject', version: '1'
-        compileOnly group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.12'
+        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.12'
         compileOnly group: 'org.gradle', name: 'gradle-core', version: '4.1'
 
         compileOnly group: 'org.gradle', name: 'gradle-base-services', version: '4.1'
