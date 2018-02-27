@@ -36,10 +36,10 @@
         .attr('id', 'arrowhead')
         .attr('viewBox', '-0 -5 10 10')
         .attr('refX', 20)
-        .attr('refY', 0,)
+        .attr('refY', 0)
         .attr('orient', 'auto')
-        .attr('markerWidth', 5)
-        .attr('markerHeight', 5)
+        .attr('markerWidth', 8)
+        .attr('markerHeight', 8)
         .attr('xoverflow', 'visible')
         .append('svg:path')
         .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
@@ -52,14 +52,14 @@
     for (var i = 0; i < graph.nodes.length; i++) {
         nd = graph.nodes[i];
         nd.rx = nd.id.length * 4.5;
-        nd.ry = 12;
+        nd.ry = 15;
     }
 
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function (d) {
             return d.id;
         }))
-        .force("collide", d3.ellipseForce(6, 0.5, 5))
+        .force("collide", d3.ellipseForce(30, 0.5, 5))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
     var link = svg.append("g")
