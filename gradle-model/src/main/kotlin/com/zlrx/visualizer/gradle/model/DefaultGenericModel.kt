@@ -4,21 +4,15 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.ResolvedDependency
-import org.slf4j.LoggerFactory
-import java.io.Serializable
 
-class DefaultGenericModel(val project: Project) : GenericModel, Serializable {
-
-    private val logger = LoggerFactory.getLogger(javaClass)
+class DefaultGenericModel(val project: Project) : GenericModel {
 
     //TODO need correct datatype
     override fun getSubprojectDependencies(): List<Map<String, List<DependencyModel>>> {
-        logger.debug("DefaultGenericModel.getSubprojectDependencies()")
         return project.subprojects.map { dependencies(it) }
     }
 
     override fun getRootDependencies(): Map<String, List<DependencyModel>> {
-        logger.debug("DefaultGenericModel.getRootDependencies()")
         return dependencies(project)
     }
 

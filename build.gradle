@@ -20,7 +20,7 @@ subprojects {
     apply plugin: 'kotlin'
 
     group = 'com.zlrx.visualizer'
-    version = '0.0.5'
+    version = '0.0.8'
     sourceCompatibility = 1.8
 
     compileKotlin {
