@@ -6,7 +6,7 @@ initscript {
     }
 
     dependencies {
-        classpath "com.zlrx.visualizer:gradle-model:0.0.8"
+        classpath "com.zlrx.visualizer:gradle-model:0.0.10"
     }
 }
 
