@@ -1,3 +1,3 @@
-include 'gradle-model'
-include 'visualizer-server'
+include 'gradle-dependency-model'
+include 'dependency-visualizer-backend'
 

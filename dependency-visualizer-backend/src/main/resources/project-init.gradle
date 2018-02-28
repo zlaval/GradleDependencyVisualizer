@@ -1,0 +1,15 @@
+initscript {
+    repositories {
+        maven { url 'https://repo.gradle.org/gradle/libs-releases-local/' }
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.zlrx.gradle:gradle-dependency-model:0.1.0"
+    }
+}
+
+allprojects {
+    apply plugin: com.zlrx.gradle.model.plugin.DependencyModelPlugin
+}

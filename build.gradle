@@ -19,8 +19,8 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'kotlin'
 
-    group = 'com.zlrx.visualizer'
-    version = '0.0.10'
+    group = 'com.zlrx.gradle'
+    version = '0.1.0'
     sourceCompatibility = 1.8
 
     compileKotlin {
