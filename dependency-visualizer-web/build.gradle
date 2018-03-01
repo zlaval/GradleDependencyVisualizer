@@ -1,0 +1,24 @@
+plugins {
+    id "com.moowork.node" version "1.2.0"
+}
+
+node {
+    version = '8.2.1'
+    download = true
+}
+
+task copyDistToBackend(type: Copy) {
+    print("$projectDir.parent/dependency-visualizer-backend/src/main/resources/static")
+    from 'dist'
+    into "$projectDir.parent/dependency-visualizer-backend/src/main/resources/static"
+}
+
+task webpack(type: NpmTask) {
+    args = ['run', 'build']
+}
+
+webpack.finalizedBy copyDistToBackend
+
+tasks.withType(JavaCompile) {
+    dependsOn webpack
+}

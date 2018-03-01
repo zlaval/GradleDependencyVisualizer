@@ -4,3 +4,6 @@ build/
 gradlew*
 /gradle
 /gradle-dependency.iml
+node_modules/
+dist/
+static/
