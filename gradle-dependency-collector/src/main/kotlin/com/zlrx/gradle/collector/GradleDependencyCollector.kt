@@ -23,10 +23,10 @@ class GradleDependencyCollector(private val path: String, gradleInstallDir: Stri
                     .withArguments("--init-script",
                             File(javaClass.classLoader.getResource("project-init.gradle").file).absolutePath)
                     .run()
-//TODO megfelelo model
+
             val moduleDependencies = model.getDependencies()
 
-            return moduleDependencies["compile"]!!
+            return moduleDependencies
         } finally {
             gradleConnection.close()
         }

@@ -13,8 +13,7 @@ class DependencyToolingModelBuilder : ToolingModelBuilder {
 
     override fun buildAll(modelName: String?, project: Project?): Any {
         if (project != null) {
-            val collector = DependencyCollector(project)
-            val dependencies = collector.dependencies()
+            val dependencies = DependencyCollector(project).dependencies()
             return DependencyCollectionModelImpl(dependencies)
         }
         throw RuntimeException("project must not to be null")

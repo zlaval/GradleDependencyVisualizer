@@ -7,14 +7,20 @@ interface Dependency : Serializable {
     fun getArtifactId(): String
     fun getVersion(): String
     fun getType(): String
-    fun getChildren(): Map<String, List<Dependency>>
+    fun getScope(): String
+    fun getChildren(): List<Dependency>
 }
 
 class DependencyImpl(private val groupId: String,
                      private val artifactId: String,
                      private val version: String,
                      private val type: String,
-                     private val children: Map<String, List<Dependency>> = HashMap()) : Dependency {
+                     private val scope: String,
+                     private val children: List<Dependency> = ArrayList()) : Dependency {
+
+    override fun getScope(): String {
+        return scope
+    }
 
     override fun getGroupId(): String {
         return groupId
@@ -32,7 +38,7 @@ class DependencyImpl(private val groupId: String,
         return type
     }
 
-    override fun getChildren(): Map<String, List<Dependency>> {
+    override fun getChildren(): List<Dependency> {
         return children
     }
 }

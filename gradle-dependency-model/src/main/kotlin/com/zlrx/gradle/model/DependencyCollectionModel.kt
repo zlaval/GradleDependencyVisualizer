@@ -4,11 +4,11 @@ import org.gradle.tooling.model.Model
 import java.io.Serializable
 
 interface DependencyCollectionModel : Model, Serializable {
-    fun getDependencies(): Map<String, Dependency>
+    fun getDependencies(): Dependency
 }
 
-class DependencyCollectionModelImpl(private val dependencies: Map<String, Dependency>) : DependencyCollectionModel {
-    override fun getDependencies(): Map<String, Dependency> {
+class DependencyCollectionModelImpl(private val dependencies: Dependency) : DependencyCollectionModel {
+    override fun getDependencies(): Dependency {
         return dependencies
     }
 }
