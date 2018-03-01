@@ -1,7 +1,8 @@
 package com.zlrx.gradle.visualizer.service
 
+import com.zlrx.gradle.collector.GradleDependencyCollector
+import com.zlrx.gradle.model.Dependency
 import com.zlrx.gradle.visualizer.model.JsonDependencyModel
-import com.zlrx.gradle.visualizer.processor.GradleDependencyCollector
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
@@ -16,7 +17,11 @@ class GradleDependencyService {
 
     fun generateDependencyGraphData(): JsonDependencyModel {
         val dependencyCollector = GradleDependencyCollector(projectPath, gradleInstallDir)
-        return dependencyCollector.collectDependency()
+        return mapToJson(dependencyCollector.collectDependency())
+    }
+
+    fun mapToJson(rootDependency: Dependency): JsonDependencyModel {
+        return JsonDependencyModel("test", "")
     }
 
 }

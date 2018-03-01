@@ -7,6 +7,6 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('com.fasterxml.jackson.module:jackson-module-kotlin')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    compile project(':gradle-dependency-model')
+    compile project(':gradle-dependency-collector')
     compile project(':dependency-visualizer-web')
 }

@@ -1,3 +1,5 @@
 include 'gradle-dependency-model'
 include 'dependency-visualizer-backend'
 include 'dependency-visualizer-web'
+include 'gradle-dependency-collector'
+
