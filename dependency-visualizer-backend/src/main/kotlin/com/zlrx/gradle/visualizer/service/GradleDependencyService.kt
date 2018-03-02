@@ -17,11 +17,20 @@ class GradleDependencyService {
 
     fun generateDependencyGraphData(): JsonDependencyModel {
         val dependencyCollector = GradleDependencyCollector(projectPath, gradleInstallDir)
-        return mapToJson(dependencyCollector.collectDependency())
+        return mapToJson("", dependencyCollector.collectDependency())
     }
 
-    fun mapToJson(rootDependency: Dependency): JsonDependencyModel {
-        return JsonDependencyModel("test", "")
+    fun mapToJson(parent: String, dependency: Dependency): JsonDependencyModel {
+
+        val groupId = dependency.getGroupId()
+        val artifactId = dependency.getArtifactId()
+        val version = dependency.getVersion()
+        val scope = dependency.getScope()
+        val name = "$groupId:$artifactId:$version => $scope"
+
+        val dependencies = dependency.getChildren().map { mapToJson(name, it) }
+
+        return JsonDependencyModel(name, parent, dependencies)
     }
 
 }

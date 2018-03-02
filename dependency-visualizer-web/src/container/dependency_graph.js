@@ -7,7 +7,7 @@ class DependencyGraph extends Component {
 
     constructor(props) {
         super(props)
-        this.createShape = this.createShape.bind(this)
+        this.createGraph = this.createGraph.bind(this)
     }
 
     componentWillMount() {
@@ -15,15 +15,15 @@ class DependencyGraph extends Component {
     }
 
     componentDidMount() {
-        this.createShape()
+        this.createGraph()
     }
 
     componentDidUpdate() {
         console.log("update DependencyGraph")
-        this.createShape()
+        this.createGraph()
     }
 
-    createShape() {
+    createGraph() {
         const svg = d3.select("svg")
         svg.append("circle")
             .attr("cx", 25)
