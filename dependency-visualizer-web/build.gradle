@@ -8,7 +8,6 @@ node {
 }
 
 task copyDistToBackend(type: Copy) {
-    print("$projectDir.parent/dependency-visualizer-backend/src/main/resources/static")
     from 'dist'
     into "$projectDir.parent/dependency-visualizer-backend/src/main/resources/static"
 }
@@ -20,7 +19,6 @@ task install(type: NpmTask) {
 task webpack(type: NpmTask, dependsOn: install) {
     args = ['run', 'build']
 }
-
 
 webpack.finalizedBy copyDistToBackend
 
