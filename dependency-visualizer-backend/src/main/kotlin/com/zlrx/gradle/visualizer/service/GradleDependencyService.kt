@@ -15,22 +15,21 @@ class GradleDependencyService {
     @Value(value = "\${gradle.install.dir}")
     private lateinit var gradleInstallDir: String
 
-    fun generateDependencyGraphData(): JsonDependencyModel {
+    fun generateDependencyGraphData(scope: String): JsonDependencyModel {
         val dependencyCollector = GradleDependencyCollector(projectPath, gradleInstallDir)
-        return mapToJson("", dependencyCollector.collectDependency())
+        return mapToJson(dependencyCollector.collectDependency(), scope)
     }
 
-    fun mapToJson(parent: String, dependency: Dependency): JsonDependencyModel {
+    fun mapToJson(dependency: Dependency, scopeFilter: String): JsonDependencyModel {
 
         val groupId = dependency.getGroupId()
         val artifactId = dependency.getArtifactId()
         val version = dependency.getVersion()
         val scope = dependency.getScope()
-        val name = "$groupId:$artifactId:$version => $scope"
 
-        val dependencies = dependency.getChildren().map { mapToJson(name, it) }
+        val dependencies = dependency.getChildren().filter { it.getScope() == scopeFilter || it.getScope() == "module" }.map { mapToJson(it, scopeFilter) }
 
-        return JsonDependencyModel(name, parent, dependencies)
+        return JsonDependencyModel(artifactId, dependencies, linkedMapOf("groupId" to groupId, "version" to version, "scope" to scope))
     }
 
 }
