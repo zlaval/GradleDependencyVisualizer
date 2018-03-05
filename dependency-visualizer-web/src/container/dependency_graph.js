@@ -1,12 +1,12 @@
 import React, {Component} from "react"
 import {connect} from "react-redux";
-import {listDependencies} from "../action/dependency_action"
 import Tree from 'react-d3-tree'
+import isEmptyObject from 'is-empty-object'
 
 
 const containerStyles = {
-    width: '100vw',
-    height: '100vh',
+    width: '99vw',
+    height: '95vh',
 }
 
 class DependencyGraph extends Component {
@@ -15,25 +15,17 @@ class DependencyGraph extends Component {
         this.state = {}
     }
 
-    componentWillMount() {
-        this.props.listDependencies()
-    }
-
     componentDidMount() {
         const dimensions = this.treeContainer.getBoundingClientRect();
         this.setState({
             translate: {
-                x: dimensions.width / 2,
+                x: dimensions.width / 20,
                 y: dimensions.height / 2
             }
         })
     }
 
     render() {
-        if (this.props.dependencies.length == 0) {
-            return <div>Loading data...</div>
-        }
-
         const svgSquare = {
             "shape": "rect",
             "shapeProps": {
@@ -44,16 +36,22 @@ class DependencyGraph extends Component {
             }
         }
 
+        let graph = null
+        if (isEmptyObject(this.props.dependencies)) {
+            graph = ""
+        } else {
+            graph = <Tree data={[this.props.dependencies]}
+                          nodeSvgShape={svgSquare}
+                          initialDepth={0}
+                          pathFunc={"diagonal"}
+                          depthFactor={300}
+                          translate={this.state.translate}
+            />
+        }
 
         return (
             <div style={containerStyles} ref={tc => (this.treeContainer = tc)}>
-                <Tree data={[this.props.dependencies]}
-                      nodeSvgShape={svgSquare}
-                      pathFunc="diagonal"
-                      initialDepth={0}
-                      depthFactor={300}
-                      translate={this.state.translate}
-                />
+                {graph}
             </div>
         )
     }
@@ -64,4 +62,4 @@ function mapStateToProp({dependencies}) {
     return {dependencies}
 }
 
-export default connect(mapStateToProp, {listDependencies})(DependencyGraph)
+export default connect(mapStateToProp)(DependencyGraph)

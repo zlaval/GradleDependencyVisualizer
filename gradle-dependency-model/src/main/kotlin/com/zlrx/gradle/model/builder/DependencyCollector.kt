@@ -10,7 +10,7 @@ import org.gradle.api.artifacts.ResolvedDependency
 
 class DependencyCollector(private val project: Project) {
 
-    private val scopeFilter = listOf<String>("compile", "compileOnly", "runtime", "testCompile", "testCompileOnly", "testRuntime")
+    private val scopeFilter = listOf("compile", "compileOnly", "runtime", "testCompile", "testCompileOnly", "testRuntime")
 
     fun dependencies(): Dependency {
         return collect(project, "root")

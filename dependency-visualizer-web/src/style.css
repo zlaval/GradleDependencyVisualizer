@@ -40,3 +40,14 @@
 .bgcolor {
     background: blue;
 }
+
+.container {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.filter-style {
+    background-color: aqua;
+    width: 100% !important;
+    padding: 5px;
+}
