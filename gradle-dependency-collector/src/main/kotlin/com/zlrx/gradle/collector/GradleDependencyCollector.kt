@@ -6,12 +6,16 @@ import org.gradle.tooling.GradleConnector
 import java.io.File
 
 
-class GradleDependencyCollector(private val path: String, gradleInstallDir: String) {
+class GradleDependencyCollector(private val path: String, gradleInstallDir: String?) {
 
     private val gradleConnector: GradleConnector = GradleConnector.newConnector()
 
     init {
-        gradleConnector.useInstallation(File(gradleInstallDir))
+        if (gradleInstallDir == null) {
+            gradleConnector.useGradleVersion("4.1")
+        } else {
+            gradleConnector.useInstallation(File(gradleInstallDir))
+        }
     }
 
     fun collectDependency(): Dependency {
