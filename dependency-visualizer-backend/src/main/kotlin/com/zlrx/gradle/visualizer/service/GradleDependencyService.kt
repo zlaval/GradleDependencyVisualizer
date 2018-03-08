@@ -26,9 +26,17 @@ class GradleDependencyService {
         val artifactId = dependency.getArtifactId()
         val version = dependency.getVersion()
         val scope = dependency.getScope()
+        val filter = """\b$scopeFilter\b"""
 
         val dependencies = dependency.getChildren()
-                // .filter { it.getScope() == scopeFilter || it.getScope() == "module" }
+                .filter {
+                    when (scopeFilter) {
+                        "all" -> true
+                        "module" -> it.getScope().contains("module")
+                        "test" -> it.getScope().contains("test")
+                        else -> it.getScope().contains(filter.toRegex()) || it.getScope().contains("module")
+                    }
+                }
                 .map { mapToJson(it, scopeFilter) }
 
         return JsonDependencyModel(artifactId, dependencies, linkedMapOf("groupId" to groupId, "version" to version, "scope" to scope))

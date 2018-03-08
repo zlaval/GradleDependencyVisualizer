@@ -11,7 +11,7 @@ class DependencyFilter extends Component {
         super(props)
         this.state = {
             groupId: "",
-            scope: "compile"
+            scope: "module"
         }
         this.onFormSubmit = this.onFormSubmit.bind(this)
         this.onGroupIdChange = this.onGroupIdChange.bind(this)
@@ -37,6 +37,12 @@ class DependencyFilter extends Component {
                 <label>
                     Scope:
                     <RadioGroup value={this.state.scope} onChange={this.onScopeRadioChange} horizontal>
+                        <RadioButton value="all" rootColor="black" pointColor="yellow">
+                            All
+                        </RadioButton>
+                        <RadioButton value="module" rootColor="black" pointColor="yellow">
+                            Submodules only
+                        </RadioButton>
                         <RadioButton value="compile" rootColor="black" pointColor="yellow">
                             Compile
                         </RadioButton>

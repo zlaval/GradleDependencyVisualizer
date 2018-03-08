@@ -15,7 +15,7 @@ class DependencyCollector(private val project: Project) {
         return collect(project, "root")
     }
 
-    private fun collect(project: Project, type: String): Dependency {
+    private fun collect(project: Project, scope: String): Dependency {
         val name = project.name
         val group = project.group.toString()
         val version = project.version.toString()
@@ -33,17 +33,18 @@ class DependencyCollector(private val project: Project) {
 
         val dependencyGraph: List<Dependency> = dependent + modules
 
-        return DependencyImpl(group, name, version, type, "root", dependencyGraph)
+        return DependencyImpl(group, name, version, "project", scope, dependencyGraph)
     }
 
     private fun combineDependencies(dependencies: List<Dependency>): Dependency {
         val firstDependency = dependencies[0]
-        val scope = dependencies.map { it.getScope() }.joinToString { "," }
+        val scope = dependencies.joinToString(", ") { it.getScope() }
+
         val subDependencies = dependencies
                 .map { it.getChildren() }
                 .flatten()
                 .groupBy { Selector(it.getGroupId(), it.getArtifactId(), it.getVersion()) }
-                .map { (key, value) -> combineDependencies(value) }
+                .map { (_, value) -> combineDependencies(value) }
 
         return DependencyImpl(firstDependency.getGroupId(), firstDependency.getArtifactId(), firstDependency.getVersion()
                 , firstDependency.getType(), scope, subDependencies)
