@@ -33,7 +33,7 @@ class GradleDependencyService {
                     when (scopeFilter) {
                         "all" -> true
                         "module" -> it.getScope().contains("module")
-                        "test" -> it.getScope().contains("test")
+                        "test" -> it.getScope().contains("test") || it.getScope().contains("module")
                         else -> it.getScope().contains(filter.toRegex()) || it.getScope().contains("module")
                     }
                 }
