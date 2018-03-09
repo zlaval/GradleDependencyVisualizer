@@ -26,6 +26,7 @@ class GradleDependencyService {
         val artifactId = dependency.getArtifactId()
         val version = dependency.getVersion()
         val scope = dependency.getScope()
+
         val filter = """\b$scopeFilter\b"""
 
         val dependencies = dependency.getChildren()

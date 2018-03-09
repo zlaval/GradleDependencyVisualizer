@@ -1,44 +1,15 @@
-.node {
+.nodeBase {
     cursor: pointer;
+    fill: #90EE90 !important;
+    stroke: #000;
+    stroke-width: 2;
 }
 
-.overlay {
-    background-color: #EEE;
-}
-
-.node circle {
-    fill: #fff;
-    stroke: steelblue;
-    stroke-width: 1.5px;
-}
-
-.node text {
-    font-size: 10px;
-    font-family: sans-serif;
-}
-
-.link {
-    fill: none;
-    stroke: #ccc;
-    stroke-width: 1.5px;
-}
-
-.templink {
-    fill: none;
-    stroke: red;
-    stroke-width: 3px;
-}
-
-.ghostCircle.show {
-    display: block;
-}
-
-.ghostCircle, .activeDrag .ghostCircle {
-    display: none;
-}
-
-.bgcolor {
-    background: blue;
+.nodeAttributesBase {
+    fill: #000 !important;
+    stroke: #000 !important;
+    stroke-width: 1;
+    font-size: smaller;
 }
 
 .container {

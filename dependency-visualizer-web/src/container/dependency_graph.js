@@ -29,8 +29,8 @@ class DependencyGraph extends Component {
         const svgSquare = {
             "shape": "rect",
             "shapeProps": {
-                "width": 200,
-                "height": 30,
+                "width": 210,
+                "height": 76,
                 "y": -25,
                 "x": 0
             }
