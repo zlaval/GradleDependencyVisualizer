@@ -25,7 +25,7 @@ class GradleDependencyService {
     fun filterWithGroupId(dependency: Dependency, groupId: String?): Dependency? {
         if (groupId != null) {
             val children = dependency.getChildren().mapNotNull { filterWithGroupId(it, groupId) }
-            if (!children.isEmpty() || dependency.getGroupId() == groupId || dependency.getScope() == "module") {
+            if (!children.isEmpty() || dependency.getGroupId().contains(groupId, true) || dependency.getScope() == "module") {
                 return DependencyImpl(dependency.getGroupId(),
                         dependency.getArtifactId(),
                         dependency.getVersion(),
