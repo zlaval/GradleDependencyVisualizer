@@ -38,7 +38,13 @@ class DependencyCollector(private val project: Project) {
 
     private fun combineDependencies(dependencies: List<Dependency>): Dependency {
         val firstDependency = dependencies[0]
-        val scope = dependencies.joinToString(", ") { it.getScope() }
+        val scope = dependencies.map {
+            if (it.getScope().contains("test")) {
+                "test"
+            } else {
+                it.getScope()
+            }
+        }.toSet().joinToString(", ")
 
         val subDependencies = dependencies
                 .map { it.getChildren() }

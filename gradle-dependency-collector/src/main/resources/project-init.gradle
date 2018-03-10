@@ -6,7 +6,7 @@ initscript {
     }
 
     dependencies {
-        classpath "com.zlrx.gradle:gradle-dependency-model:0.1.3"
+        classpath "com.zlrx.gradle:gradle-dependency-model:0.1.4"
     }
 }
 
