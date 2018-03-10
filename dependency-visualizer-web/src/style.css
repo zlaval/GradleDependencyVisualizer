@@ -18,7 +18,11 @@
 }
 
 .filter-style {
-    background-color: aqua;
+    background-color: #EDE3DB;
     width: 100% !important;
     padding: 5px;
+}
+
+.container {
+    width: 100%;
 }

@@ -27,7 +27,7 @@ class DependencyCollector(private val project: Project) {
                 .map { dependencyGraph(it) }
                 .flatten()
                 .groupBy { Selector(it.getGroupId(), it.getArtifactId(), it.getVersion()) }
-                .map { (key, value) ->
+                .map { (_, value) ->
                     combineDependencies(value)
                 }
 

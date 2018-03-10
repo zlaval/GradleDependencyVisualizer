@@ -33,37 +33,46 @@ class DependencyFilter extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onFormSubmit} className="filter-style">
-                <label>
-                    Scope:
-                    <RadioGroup value={this.state.scope} onChange={this.onScopeRadioChange} horizontal>
-                        <RadioButton value="all" rootColor="black" pointColor="yellow">
-                            All
-                        </RadioButton>
-                        <RadioButton value="module" rootColor="black" pointColor="yellow">
-                            Submodules only
-                        </RadioButton>
-                        <RadioButton value="compile" rootColor="black" pointColor="yellow">
-                            Compile
-                        </RadioButton>
-                        <RadioButton value="compileOnly" rootColor="black" pointColor="yellow">
-                            Compile only
-                        </RadioButton>
-                        <RadioButton value="runtime" rootColor="black" pointColor="yellow">
-                            Runtime
-                        </RadioButton>
-                        <RadioButton value="test" rootColor="black" pointColor="yellow">
-                            Test
-                        </RadioButton>
-                    </RadioGroup>
-                </label>
-                <label>
-                    GroupId:
-                    <input value={this.state.groupId} onChange={this.onGroupIdChange}/>
-                </label>
-                <span className="input-group-btn">
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </span>
+            <form onSubmit={this.onFormSubmit} className="filter-style input-group">
+
+                <table width="90%">
+                    <tr>
+                        <td>
+                            <span className="input-group-btn">
+                                <button type="submit" className="btn btn-primary">Submit</button>
+                            </span>
+                        </td>
+                        <td>
+                            <label>
+                                GroupId:
+                                <input value={this.state.groupId} onChange={this.onGroupIdChange}/>
+                            </label>
+                        </td>
+                        <td>
+                            <RadioGroup value={this.state.scope} onChange={this.onScopeRadioChange} horizontal>
+                                <RadioButton value="all" rootColor="#090F0F" pointColor="blue">
+                                    All
+                                </RadioButton>
+                                <RadioButton value="module" rootColor="#090F0F" pointColor="blue">
+                                    Submodules only
+                                </RadioButton>
+                                <RadioButton value="compile" rootColor="#090F0F" pointColor="blue">
+                                    Compile
+                                </RadioButton>
+                                <RadioButton value="compileOnly" rootColor="#090F0F" pointColor="blue">
+                                    Compile only
+                                </RadioButton>
+                                <RadioButton value="runtime" rootColor="#090F0F" pointColor="blue">
+                                    Runtime
+                                </RadioButton>
+                                <RadioButton value="test" rootColor="#090F0F" pointColor="blue">
+                                    Test
+                                </RadioButton>
+                            </RadioGroup>
+                        </td>
+                    </tr>
+                </table>
+
             </form>
         )
     }

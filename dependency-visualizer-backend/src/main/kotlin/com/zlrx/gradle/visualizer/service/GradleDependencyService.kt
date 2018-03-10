@@ -2,6 +2,7 @@ package com.zlrx.gradle.visualizer.service
 
 import com.zlrx.gradle.collector.GradleDependencyCollector
 import com.zlrx.gradle.model.Dependency
+import com.zlrx.gradle.model.DependencyImpl
 import com.zlrx.gradle.visualizer.model.JsonDependencyModel
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -15,9 +16,28 @@ class GradleDependencyService {
     @Value(value = "\${gradle.install.dir:#{null}}")
     private var gradleInstallDir: String? = null
 
-    fun generateDependencyGraphData(scope: String): JsonDependencyModel {
+    fun generateDependencyGraphData(scope: String, groupId: String?): JsonDependencyModel {
         val dependencyCollector = GradleDependencyCollector(projectPath, gradleInstallDir)
-        return mapToJson(dependencyCollector.collectDependency(), scope)
+        val dependency = filterWithGroupId(dependencyCollector.collectDependency(), groupId)
+        return mapToJson(dependency!!, scope)
+    }
+
+    fun filterWithGroupId(dependency: Dependency, groupId: String?): Dependency? {
+        if (groupId != null) {
+            val children = dependency.getChildren().mapNotNull { filterWithGroupId(it, groupId) }
+            if (!children.isEmpty() || dependency.getGroupId() == groupId || dependency.getScope() == "module") {
+                return DependencyImpl(dependency.getGroupId(),
+                        dependency.getArtifactId(),
+                        dependency.getVersion(),
+                        dependency.getType(),
+                        dependency.getScope(),
+                        children)
+            }
+            return null
+        } else {
+            return dependency
+        }
+
     }
 
     fun mapToJson(dependency: Dependency, scopeFilter: String): JsonDependencyModel {

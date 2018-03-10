@@ -14,6 +14,8 @@ class GradleVisualizerEndpoint {
 
     @GetMapping("{scope}")
     @CrossOrigin
-    fun generateDependencyData(@PathVariable scope: String): JsonDependencyModel = gradleDependencyService.generateDependencyGraphData(scope)
+    fun generateDependencyData(@PathVariable scope: String,
+                               @RequestParam(value = "groupId", required = false) groupId: String?): JsonDependencyModel =
+            gradleDependencyService.generateDependencyGraphData(scope, groupId)
 
 }
