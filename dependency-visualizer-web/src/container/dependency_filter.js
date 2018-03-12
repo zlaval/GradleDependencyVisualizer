@@ -36,6 +36,7 @@ class DependencyFilter extends Component {
             <form onSubmit={this.onFormSubmit} className="filter-style input-group">
 
                 <table width="90%">
+                    <tbody>
                     <tr>
                         <td>
                             <span className="input-group-btn">
@@ -71,6 +72,7 @@ class DependencyFilter extends Component {
                             </RadioGroup>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
 
             </form>
