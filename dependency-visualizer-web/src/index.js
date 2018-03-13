@@ -8,6 +8,7 @@ import "./style.css"
 
 import reducers from "./reducer"
 import Home from "./component/home"
+import DependencyView from "./component/dependency_view"
 
 const store = createStore(
     reducers,
@@ -20,6 +21,7 @@ ReactDOM.render(
         <BrowserRouter>
             <div>
                 <Switch>
+                    <Route path="/dependencies" component={DependencyView}/>
                     <Route path="/" component={Home}/>
                 </Switch>
             </div>

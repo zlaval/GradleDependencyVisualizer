@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service
 @Service
 class GradleDependencyService {
 
-    @Value(value = "\${gradle.project.path}")
-    private lateinit var projectPath: String
+    //@Value(value = "\${gradle.project.path}")
+    private var projectPath: String = ""
 
     @Value(value = "\${gradle.install.dir:#{null}}")
     private var gradleInstallDir: String? = null
+
+    fun setProjectDirectory(dir: String) {
+        projectPath = dir
+    }
 
     fun generateDependencyGraphData(scope: String, groupId: String?): JsonDependencyModel {
         val dependencyCollector = GradleDependencyCollector(projectPath, gradleInstallDir)
