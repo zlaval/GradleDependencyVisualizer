@@ -2,6 +2,8 @@ import React, {Component} from "react"
 import {RadioButton, RadioGroup} from 'react-radio-buttons'
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
+import IconButton from 'material-ui/IconButton';
+import ContentReply from 'material-ui/svg-icons/content/reply';
 
 import {listDependencies} from "../action/dependency_action"
 
@@ -16,6 +18,7 @@ class DependencyFilter extends Component {
         this.onFormSubmit = this.onFormSubmit.bind(this)
         this.onGroupIdChange = this.onGroupIdChange.bind(this)
         this.onScopeRadioChange = this.onScopeRadioChange.bind(this)
+        this.onBackButton = this.onBackButton.bind(this)
     }
 
     onFormSubmit(event) {
@@ -31,7 +34,24 @@ class DependencyFilter extends Component {
         this.setState({scope: value})
     }
 
+    onBackButton() {
+        this.props.history.push('/')
+    }
+
     render() {
+        const styles = {
+            largeIcon: {
+                width: 36,
+                height: 36,
+            },
+            large: {
+                width: 42,
+                height: 42,
+                padding: 5,
+                paddingLeft: 30
+            }
+        };
+
         return (
             <form onSubmit={this.onFormSubmit} className="filter-style input-group">
 
@@ -70,6 +90,12 @@ class DependencyFilter extends Component {
                                     Test
                                 </RadioButton>
                             </RadioGroup>
+                        </td>
+                        <td>
+                            <IconButton onClick={this.onBackButton} iconStyle={styles.largeIcon} style={styles.large}
+                                        tooltip="Back to directory select">
+                                <ContentReply/>
+                            </IconButton>
                         </td>
                     </tr>
                     </tbody>

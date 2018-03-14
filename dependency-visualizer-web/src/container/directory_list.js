@@ -28,7 +28,6 @@ class DependencyListTable extends Component {
     onRowSelection(rowNumber,) {
         const element = this.props.directories[rowNumber]
         this.props.selectDirectory(element, () => {
-            console.log("navigate to dependencies")
             this.props.history.push('/dependencies')
         })
     }

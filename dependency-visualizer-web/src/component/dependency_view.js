@@ -7,7 +7,7 @@ export default class DependencyView extends Component {
     render() {
         return (
             <div>
-                <DependencyFilter/>
+                <DependencyFilter history={this.props.history}/>
                 <DependencyGraph/>
             </div>
         )
