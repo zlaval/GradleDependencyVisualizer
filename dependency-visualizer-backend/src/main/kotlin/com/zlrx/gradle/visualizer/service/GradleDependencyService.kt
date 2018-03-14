@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service
 @Service
 class GradleDependencyService {
 
-    //@Value(value = "\${gradle.project.path}")
     private var projectPath: String = ""
 
     @Value(value = "\${gradle.install.dir:#{null}}")
@@ -41,7 +40,6 @@ class GradleDependencyService {
         } else {
             return dependency
         }
-
     }
 
     fun mapToJson(dependency: Dependency, scopeFilter: String): JsonDependencyModel {
