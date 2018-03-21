@@ -59,6 +59,11 @@ class DependencyFilter extends Component {
                     <tbody>
                     <tr>
                         <td>
+                            <b> Project name: {this.props.projectName} </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <span className="input-group-btn">
                                 <button type="submit" className="btn btn-primary">Submit</button>
                             </span>
